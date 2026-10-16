@@ -49,6 +49,8 @@ canvas:focus-visible {
 }
 .masthead {
   display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
   align-items: center;
   justify-content: space-between;
   padding: 24px 0;
@@ -64,8 +66,9 @@ canvas:focus-visible {
   border-top: 1px solid #d8e2e7;
   padding-top: 20px;
 }
-.making-of summary {
-  cursor: pointer;
+.making-of > h2 {
+  margin: 0;
+  font: inherit;
   color: #526773;
 }
 .making-of .notes {
@@ -100,15 +103,14 @@ canvas:focus-visible {
   background: white;
 }
 .brand {
-  font-size: 22px;
-  font-weight: 650;
-  text-decoration: none;
-  color: #17232a;
+  display: inline-flex;
+  align-items: center;
+  flex-shrink: 0;
 }
-.brand-dot {
-  font-size: 12px;
-  color: #2867ee;
-  margin-left: 6px;
+.brand img {
+  display: block;
+  width: 220px;
+  height: auto;
 }
 .edition,
 .eyebrow,
@@ -298,7 +300,7 @@ canvas {
   border-top: 1px solid #d8e2e7;
   padding-top: 20px;
 }
-.notes h2 {
+.notes h3 {
   font-size: 20px;
   font-weight: 550;
   line-height: 1.35;
@@ -331,6 +333,9 @@ footer span {
   }
   .masthead {
     padding: 18px 0;
+  }
+  .brand img {
+    width: 180px;
   }
   .edition {
     display: none;

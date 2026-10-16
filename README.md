@@ -101,7 +101,7 @@ battery timing are new game design in `demo/expedition.js`; the REA investigatio
 
 ## Layout and license
 
-- `demo/`: static game and seven bundled runtime images.
+- `demo/`: static game, seven gameplay images, and the DreamLayer wordmark.
 - `assets/`: original DreamLayer outputs, generation receipts, crop metadata and file manifest.
 - `reference/`: controlled source, minified artifact, target digest.
 - `scripts/`: local server, investigation, plan/recovery and validation.

@@ -154,6 +154,12 @@
       "role": "interface",
       "source": "demo/style.css",
       "origin": "Authored HTML/CSS"
+    },
+    {
+      "role": "DreamLayer brand wordmark",
+      "source": "demo/assets/dreamlayer-wordmark.webp",
+      "origin": "Existing DreamLayer website wordmark, reused unchanged; not generated for this example",
+      "sha256": "7b08b1d7944c5febb3b11e553525d0dde1aee4a083fd19ec32aaac4149852d66"
     }
   ],
   "bootstrap": {

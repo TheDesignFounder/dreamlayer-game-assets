@@ -17,14 +17,24 @@
   <body>
     <main>
       <header class="masthead">
-        <a href="https://dreamlayer.io" class="brand"
-          >DreamLayer<span class="brand-dot">●</span></a
-        >
+        <a href="https://dreamlayer.io" class="brand">
+          <img
+            src="assets/dreamlayer-wordmark.webp"
+            alt="DreamLayer AI"
+            width="220"
+            height="35"
+          />
+        </a>
         <nav aria-label="About this game">
           <a
             href="https://github.com/TheDesignFounder/dreamlayer-game-assets/blob/main/docs/asset-workflow.md"
+            target="_blank"
+            rel="noopener"
             >How it was made</a
-          ><a href="https://github.com/TheDesignFounder/dreamlayer-game-assets"
+          ><a
+            href="https://github.com/TheDesignFounder/dreamlayer-game-assets"
+            target="_blank"
+            rel="noopener"
             >Source ↗</a
           >
         </nav>
@@ -77,6 +87,8 @@
             >Move: arrows / WASD · Pulse: Space · Pause: Esc</span
           ><a
             href="https://github.com/TheDesignFounder/dreamlayer-game-assets/blob/main/assets/manifest.json"
+            target="_blank"
+            rel="noopener"
             >Artwork made with DreamLayer ↗</a
           >
         </div>
@@ -90,12 +102,12 @@
           Pulse
         </button>
       </div>
-      <details class="making-of">
-        <summary>About the artwork and the movement experiment</summary>
-        <section class="notes">
+      <section class="making-of" aria-labelledby="about-title">
+        <h2 id="about-title">About the artwork and the movement experiment</h2>
+        <div class="notes">
           <article>
             <span class="note-index">THE MECHANIC</span>
-            <h2>Equal speed in every direction.</h2>
+            <h3>Equal speed in every direction.</h3>
             <p>
               Diagonal input is normalized. Movement runs at 180 pixels per
               second, with a 50 ms frame cap. Switching artwork changes only the
@@ -103,12 +115,14 @@
             </p>
             <a
               href="https://github.com/TheDesignFounder/dreamlayer-game-assets/blob/main/docs/rea-workflow.md"
+              target="_blank"
+              rel="noopener"
               >Read the investigation ↗</a
             >
           </article>
           <article>
             <span class="note-index">THE ARTWORK</span>
-            <h2>One scene. One visual language.</h2>
+            <h3>One scene. One visual language.</h3>
             <p>
               DreamLayer generated the courtyard, then a matching sheet of six
               objects from that reference. Background removal and crops turned
@@ -116,12 +130,14 @@
             </p>
             <a
               href="https://github.com/TheDesignFounder/dreamlayer-game-assets/blob/main/docs/asset-workflow.md"
+              target="_blank"
+              rel="noopener"
               >See the asset workflow ↗</a
             >
           </article>
           <article>
             <span class="note-index">THE BOUNDARY</span>
-            <h2>A controlled demonstration.</h2>
+            <h3>A controlled demonstration.</h3>
             <p>
               REA analyzed our minified reference game. This is one bounded
               movement investigation. Patrols, shields and the pulse are
@@ -129,11 +145,13 @@
             </p>
             <a
               href="https://github.com/TheDesignFounder/dreamlayer-agent-plugin"
+              target="_blank"
+              rel="noopener"
               >Install the workflows ↗</a
             >
           </article>
-        </section>
-      </details>
+        </div>
+      </section>
       <footer>
         REA investigation → agent implementation → DreamLayer artwork → tested
         game <span>Independent example. No REA affiliation.</span>

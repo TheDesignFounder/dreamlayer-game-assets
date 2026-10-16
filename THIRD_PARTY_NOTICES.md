@@ -7,6 +7,9 @@ resized and encoded as WebP; the six objects are crops of the background-removed
 padding. `assets/crops.json` describes those transforms, and `assets/manifest.json` contains all hashes.
 These outputs are distributed by DreamLayer AI under the root MIT license.
 
+The header uses DreamLayer’s existing website wordmark, copied unchanged to
+`demo/assets/dreamlayer-wordmark.webp`. It is a brand asset, not a newly generated game image.
+
 The earlier bootstrap in revision `e628b3d` reused seven frames from
 [`examples/source/walk.zip`](https://github.com/TheDesignFounder/dreamlayer-agent-plugin/blob/a0244b6/examples/source/walk.zip)
 in the MIT-licensed DreamLayer agent-plugin repository. Those files have been replaced in the current
