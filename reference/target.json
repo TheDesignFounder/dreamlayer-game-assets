@@ -1,0 +1,11 @@
+{
+  "name": "Controlled movement reference",
+  "version": "1.0.0",
+  "origin": "Self-authored for TheDesignFounder/dreamlayer-game-assets",
+  "license": "MIT",
+  "artifact": "reference/artifact/game.min.js",
+  "sha256": "d454ffb5bd82c40d69f414b2520d3752b1f0911abd12f176c3216ff99017b7a1",
+  "builder": "esbuild@0.25.12",
+  "question": "Does diagonal movement change speed, and how are long frame intervals handled?",
+  "groundTruth": "reference/source/game.js; inspect separately after artifact evidence"
+}

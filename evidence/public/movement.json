@@ -1,0 +1,586 @@
+{
+  "format": "Sanitized excerpt, not an importable REA Evidence record",
+  "reaVersion": "6.5.0",
+  "targetSha256": "d454ffb5bd82c40d69f414b2520d3752b1f0911abd12f176c3216ff99017b7a1",
+  "analysisEvidenceId": "ev_3d584f5714b6e3488de801ebd5ee02e12b2925112cd894497f5d9dee7fff8ace",
+  "traceEvidenceId": "ev_f8bfbafb35b8180911965c0e64da682f07844d5e653752c4fd9dbfa87ccf3d24",
+  "commands": [
+    "rea analyze-javascript-application <absolute reference/artifact> --json",
+    "rea trace-javascript-semantics <absolute trace-request.json> --json"
+  ],
+  "observed": {
+    "movementFunction": {
+      "kind": "function",
+      "identity": {
+        "artifact_sha256": "d454ffb5bd82c40d69f414b2520d3752b1f0911abd12f176c3216ff99017b7a1",
+        "module_path": "game.min.js",
+        "source_range": {
+          "start": {
+            "line": 1,
+            "column": 0
+          },
+          "end": {
+            "line": 1,
+            "column": 188
+          }
+        },
+        "role_key": "callable:callable:function:0:188"
+      },
+      "function_node_id": null,
+      "application_node_ids": [
+        "jag_node_c4b06d2a186c004e16bc18e27237595acaa527558c0ea20992b1dde1c38def85"
+      ],
+      "label": "i",
+      "properties": {
+        "name": "i"
+      },
+      "evidence": {
+        "context_id": "jsrg_evidence_c0ddbc74088d56cdc44de0c0300625cd2c40e1ce3ce6c923f90c133780934fc8",
+        "location": {
+          "available": true,
+          "value": {
+            "kind": "source-range",
+            "source": "game.min.js",
+            "start": {
+              "line": 1,
+              "column": 0
+            },
+            "end": {
+              "line": 1,
+              "column": 188
+            }
+          }
+        }
+      },
+      "node_id": "jsrg_node_ca13313a571f6f7fecec9eced9fe300fbd45ebf6384bcbc4b02ec05fafa5f013"
+    },
+    "hypotRead": {
+      "kind": "expression",
+      "identity": {
+        "artifact_sha256": "d454ffb5bd82c40d69f414b2520d3752b1f0911abd12f176c3216ff99017b7a1",
+        "module_path": "game.min.js",
+        "source_range": {
+          "start": {
+            "line": 1,
+            "column": 24
+          },
+          "end": {
+            "line": 1,
+            "column": 34
+          }
+        },
+        "role_key": "object:read:24:34"
+      },
+      "function_node_id": "jsrg_node_ca13313a571f6f7fecec9eced9fe300fbd45ebf6384bcbc4b02ec05fafa5f013",
+      "application_node_ids": [],
+      "label": "read:/hypot",
+      "properties": {
+        "operation_kind": "read",
+        "property_path": [
+          "hypot"
+        ]
+      },
+      "evidence": {
+        "context_id": "jsrg_evidence_c0ddbc74088d56cdc44de0c0300625cd2c40e1ce3ce6c923f90c133780934fc8",
+        "location": {
+          "available": true,
+          "value": {
+            "kind": "source-range",
+            "source": "game.min.js",
+            "start": {
+              "line": 1,
+              "column": 24
+            },
+            "end": {
+              "line": 1,
+              "column": 34
+            }
+          }
+        }
+      },
+      "node_id": "jsrg_node_df7aa6d8c2af989211dd45cc0f195a9a14959f59feba45ea5c628cd02835d79b"
+    },
+    "traceStatus": "found",
+    "traceSummary": {
+      "total_seed_matches": 1,
+      "traversed_nodes": 2,
+      "traversed_relations": 1,
+      "traversed_functions": 2,
+      "traversed_modules": 1,
+      "relevant_unknowns": 8
+    },
+    "traceNodes": [
+      {
+        "kind": "call-site",
+        "identity": {
+          "artifact_sha256": "d454ffb5bd82c40d69f414b2520d3752b1f0911abd12f176c3216ff99017b7a1",
+          "module_path": "game.min.js",
+          "source_range": {
+            "start": {
+              "line": 1,
+              "column": 232
+            },
+            "end": {
+              "line": 1,
+              "column": 363
+            }
+          },
+          "role_key": "call:call:call:232:363"
+        },
+        "function_node_id": "jsrg_node_3bb391ccacbd858004cb771297d291a45c40a1f327187e5ffe902c60a7d110fc",
+        "application_node_ids": [],
+        "label": "call",
+        "properties": {},
+        "evidence": {
+          "context_id": "jsrg_evidence_c0ddbc74088d56cdc44de0c0300625cd2c40e1ce3ce6c923f90c133780934fc8",
+          "location": {
+            "available": true,
+            "value": {
+              "kind": "source-range",
+              "source": "game.min.js",
+              "start": {
+                "line": 1,
+                "column": 232
+              },
+              "end": {
+                "line": 1,
+                "column": 363
+              }
+            }
+          }
+        },
+        "node_id": "jsrg_node_686ae28fb0402243bb105e72e19cbebb4ff7d4efe88ad80852c38c2c2088d382"
+      },
+      {
+        "kind": "function",
+        "identity": {
+          "artifact_sha256": "d454ffb5bd82c40d69f414b2520d3752b1f0911abd12f176c3216ff99017b7a1",
+          "module_path": "game.min.js",
+          "source_range": {
+            "start": {
+              "line": 1,
+              "column": 0
+            },
+            "end": {
+              "line": 1,
+              "column": 188
+            }
+          },
+          "role_key": "callable:callable:function:0:188"
+        },
+        "function_node_id": null,
+        "application_node_ids": [
+          "jag_node_c4b06d2a186c004e16bc18e27237595acaa527558c0ea20992b1dde1c38def85"
+        ],
+        "label": "i",
+        "properties": {
+          "name": "i"
+        },
+        "evidence": {
+          "context_id": "jsrg_evidence_c0ddbc74088d56cdc44de0c0300625cd2c40e1ce3ce6c923f90c133780934fc8",
+          "location": {
+            "available": true,
+            "value": {
+              "kind": "source-range",
+              "source": "game.min.js",
+              "start": {
+                "line": 1,
+                "column": 0
+              },
+              "end": {
+                "line": 1,
+                "column": 188
+              }
+            }
+          }
+        },
+        "node_id": "jsrg_node_ca13313a571f6f7fecec9eced9fe300fbd45ebf6384bcbc4b02ec05fafa5f013"
+      }
+    ],
+    "traceRelations": [
+      {
+        "source_node_id": "jsrg_node_686ae28fb0402243bb105e72e19cbebb4ff7d4efe88ad80852c38c2c2088d382",
+        "target_node_id": "jsrg_node_ca13313a571f6f7fecec9eced9fe300fbd45ebf6384bcbc4b02ec05fafa5f013",
+        "relation": "calls",
+        "resolution": "resolved",
+        "properties": {},
+        "evidence": {
+          "context_id": "jsrg_evidence_ff0454754f27967842877990f9df0f6c0654e7820a713f49ba7a46b613d8662e",
+          "location": {
+            "available": true,
+            "value": {
+              "kind": "source-range",
+              "source": "game.min.js",
+              "start": {
+                "line": 1,
+                "column": 232
+              },
+              "end": {
+                "line": 1,
+                "column": 363
+              }
+            }
+          }
+        },
+        "relation_id": "jsrg_relation_9aca30c5d9ddd63b8467a2ebc9e24fa782442902f2eac28ac580006decbc1cbb"
+      }
+    ],
+    "evidenceContexts": [
+      {
+        "authority": "unknown",
+        "state": "unknown",
+        "confidence": "unknown",
+        "artifact": {
+          "available": true,
+          "artifact_id": "art_d454ffb5bd82c40d69f414b2520d3752b1f0911abd12f176c3216ff99017b7a1",
+          "sha256": "d454ffb5bd82c40d69f414b2520d3752b1f0911abd12f176c3216ff99017b7a1"
+        },
+        "extractor": {
+          "name": "rea-javascript-semantic-analysis",
+          "version": "1",
+          "operation": "analyze_javascript_application",
+          "executable_sha256": null
+        },
+        "coverage": {
+          "status": "complete",
+          "truncated": false,
+          "omitted_count": 0,
+          "limits": []
+        },
+        "limitations": [
+          "Dynamic syntax prevents an exact static relationship."
+        ],
+        "evidence_ids": [],
+        "context_id": "jsrg_evidence_3a8f3a8c7a3fb9ac32733795a01688b37e08545514ed1572ee1d26d3a30dccb0"
+      },
+      {
+        "authority": "ast-static-analysis",
+        "state": "observed",
+        "confidence": "exact",
+        "artifact": {
+          "available": true,
+          "artifact_id": "art_d454ffb5bd82c40d69f414b2520d3752b1f0911abd12f176c3216ff99017b7a1",
+          "sha256": "d454ffb5bd82c40d69f414b2520d3752b1f0911abd12f176c3216ff99017b7a1"
+        },
+        "extractor": {
+          "name": "rea-javascript-semantic-analysis",
+          "version": "1",
+          "operation": "analyze_javascript_application",
+          "executable_sha256": null
+        },
+        "coverage": {
+          "status": "complete",
+          "truncated": false,
+          "omitted_count": 0,
+          "limits": []
+        },
+        "limitations": [],
+        "evidence_ids": [],
+        "context_id": "jsrg_evidence_c0ddbc74088d56cdc44de0c0300625cd2c40e1ce3ce6c923f90c133780934fc8"
+      },
+      {
+        "authority": "static-relationship-inference",
+        "state": "inferred",
+        "confidence": "high",
+        "artifact": {
+          "available": true,
+          "artifact_id": "art_d454ffb5bd82c40d69f414b2520d3752b1f0911abd12f176c3216ff99017b7a1",
+          "sha256": "d454ffb5bd82c40d69f414b2520d3752b1f0911abd12f176c3216ff99017b7a1"
+        },
+        "extractor": {
+          "name": "rea-javascript-semantic-analysis",
+          "version": "1",
+          "operation": "analyze_javascript_application",
+          "executable_sha256": null
+        },
+        "coverage": {
+          "status": "complete",
+          "truncated": false,
+          "omitted_count": 0,
+          "limits": []
+        },
+        "limitations": [
+          "This relationship is a conservative static candidate; it does not prove runtime execution or causal flow."
+        ],
+        "evidence_ids": [],
+        "context_id": "jsrg_evidence_ff0454754f27967842877990f9df0f6c0654e7820a713f49ba7a46b613d8662e"
+      }
+    ],
+    "unknowns": [
+      {
+        "node_id": "jsrg_node_ca13313a571f6f7fecec9eced9fe300fbd45ebf6384bcbc4b02ec05fafa5f013",
+        "family": "call-flow",
+        "relation_kinds": [
+          "calls"
+        ],
+        "reason": "dynamic-call",
+        "detail": "Unsupported MemberExpression call target.",
+        "candidate_node_ids": [],
+        "evidence": {
+          "context_id": "jsrg_evidence_3a8f3a8c7a3fb9ac32733795a01688b37e08545514ed1572ee1d26d3a30dccb0",
+          "location": {
+            "available": true,
+            "value": {
+              "kind": "source-range",
+              "source": "game.min.js",
+              "start": {
+                "line": 1,
+                "column": 144
+              },
+              "end": {
+                "line": 1,
+                "column": 152
+              }
+            }
+          }
+        },
+        "unknown_id": "jsrg_unknown_1119e27f77bfc75f8cbfb03f2d78c80de4292eedb0554dad333971752316831e"
+      },
+      {
+        "node_id": "jsrg_node_ca13313a571f6f7fecec9eced9fe300fbd45ebf6384bcbc4b02ec05fafa5f013",
+        "family": "call-flow",
+        "relation_kinds": [
+          "calls"
+        ],
+        "reason": "dynamic-call",
+        "detail": "Unsupported MemberExpression call target.",
+        "candidate_node_ids": [],
+        "evidence": {
+          "context_id": "jsrg_evidence_3a8f3a8c7a3fb9ac32733795a01688b37e08545514ed1572ee1d26d3a30dccb0",
+          "location": {
+            "available": true,
+            "value": {
+              "kind": "source-range",
+              "source": "game.min.js",
+              "start": {
+                "line": 1,
+                "column": 73
+              },
+              "end": {
+                "line": 1,
+                "column": 81
+              }
+            }
+          }
+        },
+        "unknown_id": "jsrg_unknown_1f694976e030008142a3668478ee4f58ce574615201853d6e7a8c3da224e5937"
+      },
+      {
+        "node_id": "jsrg_node_ca13313a571f6f7fecec9eced9fe300fbd45ebf6384bcbc4b02ec05fafa5f013",
+        "family": "call-flow",
+        "relation_kinds": [
+          "calls"
+        ],
+        "reason": "dynamic-call",
+        "detail": "Unsupported MemberExpression call target.",
+        "candidate_node_ids": [],
+        "evidence": {
+          "context_id": "jsrg_evidence_3a8f3a8c7a3fb9ac32733795a01688b37e08545514ed1572ee1d26d3a30dccb0",
+          "location": {
+            "available": true,
+            "value": {
+              "kind": "source-range",
+              "source": "game.min.js",
+              "start": {
+                "line": 1,
+                "column": 46
+              },
+              "end": {
+                "line": 1,
+                "column": 54
+              }
+            }
+          }
+        },
+        "unknown_id": "jsrg_unknown_4fcc55edc184d015cc4950ced6d366af6ff8353fa6f61ef0488dae322d84800d"
+      },
+      {
+        "node_id": "jsrg_node_ca13313a571f6f7fecec9eced9fe300fbd45ebf6384bcbc4b02ec05fafa5f013",
+        "family": "call-flow",
+        "relation_kinds": [
+          "calls"
+        ],
+        "reason": "dynamic-call",
+        "detail": "Unsupported MemberExpression call target.",
+        "candidate_node_ids": [],
+        "evidence": {
+          "context_id": "jsrg_evidence_3a8f3a8c7a3fb9ac32733795a01688b37e08545514ed1572ee1d26d3a30dccb0",
+          "location": {
+            "available": true,
+            "value": {
+              "kind": "source-range",
+              "source": "game.min.js",
+              "start": {
+                "line": 1,
+                "column": 99
+              },
+              "end": {
+                "line": 1,
+                "column": 107
+              }
+            }
+          }
+        },
+        "unknown_id": "jsrg_unknown_5e73f12b6e1061de7bf734ef1da682fe7f0245e7cb738dfa951d5383dc90bb3c"
+      },
+      {
+        "node_id": "jsrg_node_ca13313a571f6f7fecec9eced9fe300fbd45ebf6384bcbc4b02ec05fafa5f013",
+        "family": "call-flow",
+        "relation_kinds": [
+          "calls"
+        ],
+        "reason": "dynamic-call",
+        "detail": "Unsupported MemberExpression call target.",
+        "candidate_node_ids": [],
+        "evidence": {
+          "context_id": "jsrg_evidence_3a8f3a8c7a3fb9ac32733795a01688b37e08545514ed1572ee1d26d3a30dccb0",
+          "location": {
+            "available": true,
+            "value": {
+              "kind": "source-range",
+              "source": "game.min.js",
+              "start": {
+                "line": 1,
+                "column": 62
+              },
+              "end": {
+                "line": 1,
+                "column": 70
+              }
+            }
+          }
+        },
+        "unknown_id": "jsrg_unknown_6170b7f5ecd5b4e120ffbafd4f23ecf41d6ad16a3a6c59749216c8372ea7c586"
+      },
+      {
+        "node_id": "jsrg_node_ca13313a571f6f7fecec9eced9fe300fbd45ebf6384bcbc4b02ec05fafa5f013",
+        "family": "call-flow",
+        "relation_kinds": [
+          "calls"
+        ],
+        "reason": "dynamic-call",
+        "detail": "Unsupported MemberExpression call target.",
+        "candidate_node_ids": [],
+        "evidence": {
+          "context_id": "jsrg_evidence_3a8f3a8c7a3fb9ac32733795a01688b37e08545514ed1572ee1d26d3a30dccb0",
+          "location": {
+            "available": true,
+            "value": {
+              "kind": "source-range",
+              "source": "game.min.js",
+              "start": {
+                "line": 1,
+                "column": 156
+              },
+              "end": {
+                "line": 1,
+                "column": 164
+              }
+            }
+          }
+        },
+        "unknown_id": "jsrg_unknown_8bb496d2da804d8f519021b4d245b9b8bc343d1eb05007c8058af00cd52cff84"
+      },
+      {
+        "node_id": "jsrg_node_ca13313a571f6f7fecec9eced9fe300fbd45ebf6384bcbc4b02ec05fafa5f013",
+        "family": "call-flow",
+        "relation_kinds": [
+          "calls"
+        ],
+        "reason": "dynamic-call",
+        "detail": "Unsupported MemberExpression call target.",
+        "candidate_node_ids": [],
+        "evidence": {
+          "context_id": "jsrg_evidence_3a8f3a8c7a3fb9ac32733795a01688b37e08545514ed1572ee1d26d3a30dccb0",
+          "location": {
+            "available": true,
+            "value": {
+              "kind": "source-range",
+              "source": "game.min.js",
+              "start": {
+                "line": 1,
+                "column": 24
+              },
+              "end": {
+                "line": 1,
+                "column": 34
+              }
+            }
+          }
+        },
+        "unknown_id": "jsrg_unknown_9f545d313e4f9b30c391f42693e6eb7f333a6a087d0a10a0e071eff843657aec"
+      },
+      {
+        "node_id": "jsrg_node_ca13313a571f6f7fecec9eced9fe300fbd45ebf6384bcbc4b02ec05fafa5f013",
+        "family": "call-flow",
+        "relation_kinds": [
+          "calls"
+        ],
+        "reason": "dynamic-call",
+        "detail": "Unsupported MemberExpression call target.",
+        "candidate_node_ids": [],
+        "evidence": {
+          "context_id": "jsrg_evidence_3a8f3a8c7a3fb9ac32733795a01688b37e08545514ed1572ee1d26d3a30dccb0",
+          "location": {
+            "available": true,
+            "value": {
+              "kind": "source-range",
+              "source": "game.min.js",
+              "start": {
+                "line": 1,
+                "column": 111
+              },
+              "end": {
+                "line": 1,
+                "column": 119
+              }
+            }
+          }
+        },
+        "unknown_id": "jsrg_unknown_bcc93cd6d5606383eb67fc284a31399420db7a4c57b710f34a2a29bd188494d3"
+      }
+    ]
+  },
+  "artifactRange": {
+    "start": {
+      "line": 1,
+      "column": 0
+    },
+    "end": {
+      "line": 1,
+      "column": 188
+    },
+    "coordinateSystem": "one-based lines, zero-based columns, end exclusive",
+    "text": "function i(s,e,t){let n=Math.hypot(e.x,e.y),r=Math.max(1,n),o=Math.max(0,Math.min(t,.05));return{x:Math.max(16,Math.min(944,s.x+e.x/r*180*o)),y:Math.max(16,Math.min(524,s.y+e.y/r*180*o))}}"
+  },
+  "interpretation": "The agent read this artifact range: divide input by max(1,hypot(x,y)); multiply by 180 and elapsed clamped to [0,0.05]; clamp x to [16,944] and y to [16,524]. REA located syntax and a caller relation; it did not establish runtime equivalence.",
+  "limitations": [
+    "CommonJS and ESM binding relationships were recovered from inert syntax and resolved only within the inventoried artifact container.",
+    "Graph coverage is incomplete; unavailable facts remain explicit and must not be read as absence.",
+    "JavaScript and HTML were parsed as inert text; bundle bootstrap code was never executed.",
+    "Static imports, entrypoints, workers, endpoints, and storage relationships do not prove runtime execution.",
+    "Static paths and relationships may remain unresolved when expressions are dynamic or obfuscated.",
+    "Webpack/Rspack factories were recovered from AST literals; REA did not invoke push handlers or bundle bootstrap code."
+  ],
+  "traceLimitations": [
+    "Boundary extraction covers unshadowed JSON/global coercions plus parse and validation method candidates.",
+    "Child-process extraction covers asynchronous node:child_process creation, literal argv/env/stdio options, exit/error listeners, and kill signals.",
+    "Configuration extraction covers process.env, process.argv, node:fs reads, and direct logical defaults.",
+    "Event extraction covers EventEmitter-style literal registrations, removals, and dispatch candidates; dynamic names remain unknown.",
+    "Function fingerprints are static candidates; equal digests can remain ambiguous and do not prove behavioral equivalence.",
+    "Local data flow does not claim control-flow-sensitive reaching definitions or arbitrary dynamic property resolution.",
+    "Promise ownership covers explicit unshadowed Promise construction, static factories, aggregation, chaining, and await syntax only.",
+    "Relevant dynamic, unsupported, incomplete, or ambiguous semantics remain unknown.",
+    "Request extraction covers fetch, WebSocket, node:http/node:https construction, direct option fields, and exact local response consumers.",
+    "Resource extraction covers built-in filesystem/network acquisition and exact local close/destroy/end handles.",
+    "Semantic graph reachability is a static inference and does not prove runtime execution.",
+    "The semantic graph contains static syntax observations and conservative relationship candidates; it does not claim runtime execution.",
+    "Timer extraction covers global or node:timers scheduling and exact local-handle cancellation."
+  ],
+  "measured": {
+    "analysisSeconds": 5.5514245529999995,
+    "traceSeconds": 1.6254139030000005,
+    "scope": "local CLI wall time including process startup; warm installed packages; not CPU/peak memory/token measurement"
+  },
+  "fullEvidence": "Regenerate locally with npm run investigate. Complete unmodified records remain under .local/; private absolute workspace paths are omitted from this public excerpt."
+}

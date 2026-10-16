@@ -1,0 +1,8 @@
+{
+  "recordedAt": "2026-10-16",
+  "source": "Live DreamLayer MCP capabilities call, public billing fields only",
+  "operations": ["text_to_image", "image_to_image", "background_remove", "upscale", "sprite_sheet"],
+  "live_charge_credits_per_image": 1,
+  "sprite_sheet_credits": 9.9,
+  "note": "Historical observation, not a current quote. No paid generation was made for this example."
+}
