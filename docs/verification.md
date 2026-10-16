@@ -30,3 +30,5 @@ animation with detail drift, and only the tested Chrome browser. No native engin
 Godot runtime, other agent host, new paid artwork, or REA MCP registration is claimed by this example.
 
 The new workflow was installed in a clean temporary Codex project with skills 1.7.2 and discovered by its project skill listing. Codex used the installed instructions for the bundled-asset path and live DreamLayer MCP capabilities read. Other agent hosts were not exercised for this new skill. The separately installed MCP beta.5 package passed initialization/tools-list with its built-in schemas after a deliberately invalid probe key was rejected; that probe is not an authenticated generation test.
+
+Public installation uses an exact workflow commit. skills 1.7.2 parses a slash-containing `tree/feat/rea-game-assets` URL as branch `feat` plus a path, so the documented command pins the tested commit instead. The failed branch-URL attempt was corrected before final delivery.

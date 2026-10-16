@@ -63,13 +63,13 @@ target digest and findings rather than assuming IDs are portable.
 ## Use the agent workflow
 
 The canonical `integrate-game-art` skill lives in the existing DreamLayer plugin repository. Install the
-published workflow branch while its pull request is pending:
+published workflow commit while its pull request is pending:
 
 ```sh
-npx skills add https://github.com/TheDesignFounder/dreamlayer-agent-plugin/tree/feat/rea-game-assets --skill integrate-game-art --agent codex
+npx skills@1.7.2 add https://github.com/TheDesignFounder/dreamlayer-agent-plugin/tree/9ede338c99f189851268ba3a2ac09d67f0b086fc --skill integrate-game-art --agent codex
 ```
 
-After that branch is merged, the same selection works with `TheDesignFounder/dreamlayer-agent-plugin`.
+After the workflow is merged, the same selection works with `TheDesignFounder/dreamlayer-agent-plugin`.
 Installing instructions does not connect/authenticate either MCP server. Follow the plugin's
 [client setup](https://github.com/TheDesignFounder/dreamlayer-agent-plugin/blob/main/docs/client-setup.md).
 REA is optional for ordinary artwork tasks. This example used REA's CLI and the connected DreamLayer MCP
