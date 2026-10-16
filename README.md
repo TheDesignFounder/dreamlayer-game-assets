@@ -5,7 +5,7 @@ Collect six cells, return to the dock, and switch between geometry and artwork w
 
 [Play the demo](https://thedesignfounder.github.io/dreamlayer-game-assets/demo/) ·
 [Agent workflows](https://github.com/TheDesignFounder/dreamlayer-agent-plugin) ·
-[Investigation](docs/rea-workflow.md) · [Verification](docs/verification.md)
+[Investigation](docs/rea-workflow.md) · [Verification](docs/verification.md) · [Gameplay recording](docs/relay-garden.webm)
 
 ![Relay garden with a teal DreamLayer robot, gold cells and a pale green garden](docs/preview.webp)
 
