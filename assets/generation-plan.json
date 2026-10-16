@@ -1,0 +1,49 @@
+{
+  "name": "Relay garden coherent artwork revision",
+  "status": "Completed and integrated; these prompts can be reused in a separately authorized regeneration",
+  "style": "Painted solarpunk field station, cream ceramic machines, jade foliage, brass fittings, warm afternoon light, clear small silhouettes, orthographic overhead game view",
+  "references": [
+    {
+      "url": "https://motawe3.itch.io/underbloom",
+      "lesson": "Generate a coherent reference first; preserve its pixels when making component assets."
+    },
+    {
+      "url": "https://huseyinbuyukbayram.itch.io/attar",
+      "lesson": "Space props on a shared sheet, remove its background once, then crop individual assets."
+    },
+    {
+      "url": "https://nabeelbaghoor.itch.io/the-last-lamplighter",
+      "lesson": "Make artwork states communicate gameplay, and keep sprite pivots independent of image padding."
+    }
+  ],
+  "steps": [
+    {
+      "id": "environment",
+      "operation": "text_to_image",
+      "aspect_ratio": "16:9",
+      "destination": "assets/source/generated/environment.png",
+      "prompt": "An original hand-painted environment for a top-down 2D game called Relay garden. Orthographic overhead camera, no horizon, no isometric perspective. A sunlit abandoned solarpunk botanical research courtyard, cream limestone and pale sage tile underfoot, jade foliage, teal glass, aged brass details, finely painted gouache textures and dappled afternoon sunlight. The outermost eight percent of the frame has lush fern leaves, broken glasshouse framing and flowering vines. The inner eighty-four percent is open walkable pale stone courtyard with subtle tile seams, a gentle horizontal path through its center and small moss cracks. Keep this inner area clear of physical structures and standing plants, since gameplay objects will be placed separately. Rich illustrated game art with crisp readable silhouettes and atmospheric depth, not a schematic diagram. No people, robots, enemies, tokens, UI, text, labels, logos, watermarks or artificial blur. Full bleed 16:9 environment."
+    },
+    {
+      "id": "objects",
+      "operation": "image_to_image",
+      "referenceStep": "environment",
+      "aspect_ratio": "16:9",
+      "destination": "assets/source/generated/objects.png",
+      "prompt": "Use only the painterly texture, palette and lighting of this reference to create an original matching game-object asset sheet. Replace the entire scene with a perfectly plain white background. Arrange exactly six isolated objects in a spacious 3-column by 2-row grid with large empty gutters and no touching objects. Each object fits wholly inside its own equal-sized cell with a generous clear margin. Every object uses the same overhead orthographic view for a top-down game, slightly showing its front for legibility. Top left: a friendly compact cream ceramic garden rover with a rounded brass chassis, two small dark rubber treads, a teal glass eye and a small leaf antenna, facing downwards. Top center: a distinct rust-coral hovering security drone with circular brass body, dark central lens and two short side rotors. Top right: a square cream limestone planter densely filled with jade fern leaves. Bottom left: one golden glass energy cell, short cylindrical brass casing and luminous amber center. Bottom center: a circular teal-and-brass charging dock, seen from overhead, with a clear open center large enough to park the rover. Bottom right: a small ceramic relay beacon with a lit teal lens. All objects have bold readable shapes, subtle hand-painted detail, identical sunlight direction and crisp clean outlines. No scenery, panels, grid lines, labels, numbers, words, logos, other objects, cast shadows extending into gutters, or duplicates."
+    },
+    {
+      "id": "transparent-objects",
+      "operation": "background_remove",
+      "referenceStep": "objects",
+      "destination": "assets/source/generated/objects-transparent.png"
+    }
+  ],
+  "acceptance": [
+    "Inspect the environment before making its reference-dependent asset sheet.",
+    "Confirm each of six objects is isolated and complete; do not silently crop limbs or mix cells.",
+    "Verify real alpha from background removal, then crop and trim without repainting the generated pixels.",
+    "Record actual execution IDs, hashes, dimensions, crops and charged credits.",
+    "Keep logical collision bodies and movement unchanged, and verify the complete playthrough in artwork and geometry modes."
+  ]
+}

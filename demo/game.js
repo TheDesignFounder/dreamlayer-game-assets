@@ -1,34 +1,77 @@
-import { WORLD, PLANTERS, CELLS, createState, update } from "./mechanics.js";
+import { WORLD, PLANTERS, CELLS } from "./mechanics.js";
+import { createExpedition, stepExpedition, RULES } from "./expedition.js";
 const $ = (id) => document.getElementById(id);
+const embedded = new URLSearchParams(location.search).get("embed") === "1";
+document.documentElement.classList.toggle("embedded", embedded);
+if (embedded) {
+  // The website owns this same-origin iframe. Send only its measured height.
+  new ResizeObserver(() => {
+    parent.postMessage(
+      { type: "relay-garden:resize", height: document.body.scrollHeight },
+      location.origin,
+    );
+  }).observe(document.body);
+}
 const canvas = $("game"),
   ctx = canvas.getContext("2d");
-let state = createState(),
+let state = createExpedition(),
   mode = "art",
   running = false,
   started = false,
   lastTime = 0,
-  facing = 1;
+  facing = 0,
+  pulseRequested = false;
 const keys = new Set(),
   pointers = new Map();
 const reduceMotion = matchMedia("(prefers-reduced-motion: reduce)");
-const durations = [400, 410, 400, 410, 400, 410, 400];
-const assets = await Promise.all(
-  Array.from(
-    { length: 7 },
-    (_, i) =>
-      new Promise((resolve) => {
-        const image = new Image();
-        image.onload = () => resolve(image);
-        image.onerror = () => resolve(null);
-        image.src = `assets/walk_${String(i + 1).padStart(2, "0")}.png`;
-      }),
+const assetNames = [
+  "environment",
+  "rover",
+  "drone",
+  "planter",
+  "cell",
+  "dock",
+  "beacon",
+];
+const images = Object.fromEntries(
+  await Promise.all(
+    assetNames.map(
+      (name) =>
+        new Promise((resolve) => {
+          const image = new Image();
+          image.onload = () => resolve([name, image]);
+          image.onerror = () => resolve([name, null]);
+          image.src = `assets/generated/${name}.${name === "environment" ? "webp" : "png"}`;
+        }),
+    ),
   ),
 );
-const garden = new Image();
-garden.src = "assets/garden.svg";
-if (assets.some((asset) => !asset))
+const artworkReady = assetNames.every((name) => images[name]);
+canvas.width = WORLD.width * 2;
+canvas.height = WORLD.height * 2;
+ctx.scale(2, 2);
+if (!artworkReady)
   $("message").textContent =
     "Some artwork could not load. Geometry mode is still playable.";
+function stamp(name, x, y, width, height, rotation = 0) {
+  const image = images[name];
+  if (!image) return;
+  const scale = Math.min(
+    width / image.naturalWidth,
+    height / image.naturalHeight,
+  );
+  ctx.save();
+  ctx.translate(x, y);
+  ctx.rotate(rotation);
+  ctx.drawImage(
+    image,
+    (-image.naturalWidth * scale) / 2,
+    (-image.naturalHeight * scale) / 2,
+    image.naturalWidth * scale,
+    image.naturalHeight * scale,
+  );
+  ctx.restore();
+}
 const round = (x, y, w, h, r, fill) => {
   ctx.fillStyle = fill;
   ctx.beginPath();
@@ -47,10 +90,12 @@ function pause() {
   running = false;
   keys.clear();
   pointers.clear();
+  pulseRequested = false;
   $("pause").textContent = "Resume";
+  draw();
 }
 function start() {
-  if (state.won) reset();
+  if (state.won || state.lost) reset();
   started = true;
   running = true;
   lastTime = 0;
@@ -60,23 +105,25 @@ function start() {
   canvas.focus({ preventScroll: true });
 }
 function reset() {
-  state = createState();
+  state = createExpedition();
   started = false;
   pause();
   $("overlay").hidden = false;
-  $("overlay").querySelector("h2").innerHTML =
-    "A little robot.<br>A small mission.";
+  $("overlay").querySelector("h2").innerHTML = "Bring the garden online.";
   $("overlay").querySelector("p:not(.eyebrow)").textContent =
-    "Find all six cells. Return to the blue dock.";
-  $("start").innerHTML = "Start exploring <span>→</span>";
+    "Six cells. Three shields. Ninety seconds. Move with WASD or arrows. Space stuns drones.";
+  $("start").innerHTML = "Play <span>→</span>";
   $("pause").disabled = true;
   $("score").textContent = "0 / 6 cells";
-  $("message").textContent = "Arrow keys / WASD to move · Escape to pause";
+  $("message").textContent = "Move: arrows / WASD · Pulse: Space · Pause: Esc";
   draw();
 }
 $("start").onclick = start;
 $("restart").onclick = reset;
 $("pause").onclick = () => (running ? pause() : start());
+$("pulse").onclick = () => {
+  if (running) pulseRequested = true;
+};
 const movementKeys = [
   "ArrowLeft",
   "ArrowRight",
@@ -92,7 +139,11 @@ canvas.addEventListener("keydown", (event) => {
     event.preventDefault();
     keys.add(event.key);
   }
-  if (event.key === "Escape" && started && !state.won) {
+  if (event.code === "Space") {
+    event.preventDefault();
+    if (running && !event.repeat) pulseRequested = true;
+  }
+  if (event.key === "Escape" && started && !state.won && !state.lost) {
     event.preventDefault();
     running ? pause() : start();
   }
@@ -121,73 +172,74 @@ for (const button of document.querySelectorAll("[data-x]")) {
 }
 function draw() {
   ctx.clearRect(0, 0, WORLD.width, WORLD.height);
-  ctx.fillStyle = mode === "art" ? "#e4eddf" : "#f1f5f9";
-  ctx.fillRect(0, 0, 960, 540);
-  if (mode === "art" && garden.complete && garden.naturalWidth)
-    ctx.drawImage(garden, 0, 0, 960, 540);
-  if (mode === "baseline") {
+  const art = mode === "art" && artworkReady;
+  const motion = !reduceMotion.matches;
+  ctx.fillStyle = art ? "#f3ecdd" : "#f1f5f9";
+  ctx.fillRect(0, 0, WORLD.width, WORLD.height);
+  if (art) ctx.drawImage(images.environment, 0, 0, WORLD.width, WORLD.height);
+  else {
     ctx.strokeStyle = "#dce5ed";
     ctx.lineWidth = 1;
+    ctx.beginPath();
     for (let x = 0; x < 960; x += 40) {
-      ctx.beginPath();
       ctx.moveTo(x, 0);
       ctx.lineTo(x, 540);
-      ctx.stroke();
     }
     for (let y = 0; y < 540; y += 40) {
-      ctx.beginPath();
       ctx.moveTo(0, y);
       ctx.lineTo(960, y);
-      ctx.stroke();
     }
+    ctx.stroke();
   }
-  ctx.fillStyle = "#d1e3f9";
+  // Progress lights and a bright docking ring make the return objective visible.
+  const returning = state.collected.length === CELLS.length;
+  ctx.fillStyle = returning ? "#2867ee28" : "#2867ee12";
   ctx.beginPath();
-  ctx.arc(96, 270, 36, 0, Math.PI * 2);
+  ctx.arc(96, 270, 42, 0, Math.PI * 2);
   ctx.fill();
   ctx.strokeStyle = "#2867ee";
-  ctx.lineWidth = 2;
+  ctx.lineWidth = returning ? 3 : 1.5;
   ctx.stroke();
-  ctx.fillStyle = "#245bc8";
-  ctx.font = "11px system-ui";
+  if (art) stamp("dock", 96, 270, 82, 82);
+  for (let i = 0; i < 6; i++) {
+    const angle = (i * Math.PI) / 3 - Math.PI / 2;
+    const x = 96 + Math.cos(angle) * 55,
+      y = 270 + Math.sin(angle) * 55;
+    ctx.save();
+    ctx.globalAlpha = i < state.collected.length ? 1 : 0.3;
+    if (art) stamp("beacon", x, y, 16, 16);
+    else {
+      ctx.fillStyle = "#2867ee";
+      ctx.beginPath();
+      ctx.arc(x, y, 4, 0, Math.PI * 2);
+      ctx.fill();
+    }
+    ctx.restore();
+  }
   ctx.textAlign = "center";
-  ctx.fillText("HOME", 96, 321);
+  ctx.font = "600 10px system-ui";
+  ctx.fillStyle = "#244761";
+  ctx.fillText(returning ? "RETURN TO DOCK" : "HOME", 96, 342);
   PLANTERS.forEach((rect) => {
-    if (mode === "art") {
-      round(rect.x + 5, rect.y + 8, rect.w, rect.h, 14, "#b5c4ad");
-      round(rect.x, rect.y, rect.w, rect.h, 14, "#f1f1e4");
-      round(rect.x + 7, rect.y + 7, rect.w - 14, rect.h - 14, 10, "#9eb695");
-      for (let i = 0; i < 3; i++) {
-        ctx.fillStyle = ["#587a62", "#719570", "#436b58"][i];
-        ctx.beginPath();
-        ctx.ellipse(
-          rect.x + 26 + i * 25,
-          rect.y + rect.h / 2,
-          19,
-          29,
-          (i - 1) * 0.4,
-          0,
-          Math.PI * 2,
-        );
-        ctx.fill();
-      }
-    } else round(rect.x, rect.y, rect.w, rect.h, 2, "#718496");
+    if (art)
+      stamp(
+        "planter",
+        rect.x + rect.w / 2,
+        rect.y + rect.h / 2,
+        rect.w + 8,
+        rect.h + 8,
+      );
+    else round(rect.x, rect.y, rect.w, rect.h, 2, "#718496");
   });
   CELLS.forEach((cell, index) => {
     if (state.collected.includes(index)) return;
-    if (mode === "art") {
-      ctx.fillStyle = "#a2925528";
+    if (art) {
+      const lift = motion ? Math.sin(state.elapsed * 2.6 + index) * 2.5 : 0;
+      ctx.fillStyle = "#ad823b20";
       ctx.beginPath();
-      ctx.ellipse(cell.x, cell.y + 12, 15, 5, 0, 0, Math.PI * 2);
+      ctx.ellipse(cell.x, cell.y + 14, 10, 3, 0, 0, Math.PI * 2);
       ctx.fill();
-      ctx.save();
-      ctx.translate(cell.x, cell.y);
-      ctx.rotate(Math.PI / 4);
-      round(-10, -10, 20, 20, 5, "#c39539");
-      round(-8, -8, 15, 15, 4, "#f4d36f");
-      ctx.restore();
-      ctx.fillStyle = "#fffae9";
-      ctx.fillRect(cell.x - 2, cell.y - 5, 4, 10);
+      stamp("cell", cell.x, cell.y + lift, 24, 30);
     } else {
       ctx.fillStyle = "#b37b18";
       ctx.beginPath();
@@ -195,36 +247,81 @@ function draw() {
       ctx.fill();
     }
   });
-  const { x, y } = state.player;
-  let frame = 0;
-  if (
-    $("animate").checked &&
-    !reduceMotion.matches &&
-    running &&
-    (keys.size || pointers.size)
-  ) {
-    let at = (state.elapsed * 1000) % durations.reduce((a, b) => a + b, 0);
-    while (at >= durations[frame]) {
-      at -= durations[frame];
-      frame++;
+  for (const drone of state.drones) {
+    ctx.save();
+    ctx.fillStyle = "#58452e25";
+    ctx.beginPath();
+    ctx.ellipse(drone.x, drone.y + 15, 17, 5, 0, 0, Math.PI * 2);
+    ctx.fill();
+    if (art) {
+      if (drone.stunned) ctx.globalAlpha = 0.55;
+      stamp("drone", drone.x, drone.y, 62, 42);
+    } else {
+      ctx.fillStyle = drone.stunned ? "#597784" : "#b34b39";
+      ctx.beginPath();
+      ctx.arc(drone.x, drone.y, 15, 0, Math.PI * 2);
+      ctx.fill();
+    }
+    ctx.restore();
+    if (drone.stunned) {
+      ctx.strokeStyle = "#2867ee";
+      ctx.lineWidth = 2;
+      ctx.beginPath();
+      ctx.arc(drone.x, drone.y, 24, 0, Math.PI * 2);
+      ctx.stroke();
     }
   }
-  if (mode === "art" && assets[frame]) {
-    ctx.fillStyle = "#315b4130";
+  if (state.pulseAge < 0.45 && state.pulseOrigin) {
+    ctx.strokeStyle = `rgba(40, 103, 238, ${1 - state.pulseAge / 0.45})`;
+    ctx.lineWidth = 3;
     ctx.beginPath();
-    ctx.ellipse(x, y + 12, 20, 7, 0, 0, Math.PI * 2);
+    ctx.arc(
+      state.pulseOrigin.x,
+      state.pulseOrigin.y,
+      RULES.pulseRadius * (motion ? state.pulseAge / 0.45 : 1),
+      0,
+      Math.PI * 2,
+    );
+    ctx.stroke();
+  }
+  const { x, y } = state.player;
+  if (state.immunity > 0) {
+    ctx.strokeStyle = "#2867ee";
+    ctx.lineWidth = 3;
+    ctx.beginPath();
+    ctx.arc(x, y, 26, 0, Math.PI * 2);
+    ctx.stroke();
+  }
+  if (art) {
+    ctx.fillStyle = "#58452e20";
+    ctx.beginPath();
+    ctx.ellipse(x, y + 16, 17, 5, 0, 0, Math.PI * 2);
     ctx.fill();
-    ctx.save();
-    ctx.translate(x, y);
-    ctx.scale(facing, 1);
-    ctx.drawImage(assets[frame], -44, -65, 88, 88);
-    ctx.restore();
+    stamp("rover", x, y, 48, 54, facing);
   } else {
     round(x - 16, y - 16, 32, 32, 5, "#2867ee");
     ctx.fillStyle = "white";
-    ctx.fillRect(x + facing * 6 - 3, y - 7, 6, 6);
+    ctx.beginPath();
+    ctx.arc(
+      x - Math.sin(facing) * 8,
+      y + Math.cos(facing) * 8,
+      3,
+      0,
+      Math.PI * 2,
+    );
+    ctx.fill();
   }
-  if (started && !running && !state.won) {
+  $("shields").textContent =
+    "◆".repeat(state.shields) + "◇".repeat(3 - state.shields);
+  $("shields").setAttribute("aria-label", `${state.shields} shields remaining`);
+  const seconds = Math.ceil(state.remaining);
+  $("timer").textContent =
+    `${Math.floor(seconds / 60)}:${String(seconds % 60).padStart(2, "0")}`;
+  $("pulse").textContent = state.pulseCooldown
+    ? `Pulse ${Math.ceil(state.pulseCooldown)}s`
+    : "Pulse";
+  $("pulse").disabled = !running || state.pulseCooldown > 0;
+  if (started && !running && !state.won && !state.lost) {
     round(405, 230, 150, 54, 10, "#ffffffed");
     ctx.fillStyle = "#263c48";
     ctx.font = "18px system-ui";
@@ -232,6 +329,7 @@ function draw() {
   }
 }
 function frame(time) {
+  const wasRunning = running;
   const dt = lastTime ? (time - lastTime) / 1000 : 0;
   lastTime = time;
   if (running) {
@@ -247,9 +345,14 @@ function frame(time) {
       input.x += point.x;
       input.y += point.y;
     }
-    if (input.x) facing = Math.sign(input.x);
+    if (input.x || input.y) facing = Math.atan2(input.y, input.x) - Math.PI / 2;
     const before = state.collected.length;
-    state = update(state, input, dt);
+    const shields = state.shields;
+    state = stepExpedition(state, input, dt, pulseRequested);
+    pulseRequested = false;
+    if (state.shields < shields)
+      $("message").textContent =
+        `${state.shields} shields left. Use Space to stun nearby drones.`;
     if (before !== state.collected.length) {
       $("score").textContent = `${state.collected.length} / 6 cells`;
       $("message").textContent =
@@ -262,17 +365,35 @@ function frame(time) {
       $("overlay").hidden = false;
       $("overlay").querySelector("h2").innerHTML = "The garden<br>is online.";
       $("overlay").querySelector("p:not(.eyebrow)").textContent =
-        "Six cells collected. Nice work.";
+        `Six cells recovered in ${Math.round(state.elapsed)} seconds. ${state.shields} shields remaining.`;
       $("start").textContent = "Play again";
       $("pause").disabled = true;
       $("message").textContent = "Mission complete.";
     }
+    if (state.lost) {
+      pause();
+      $("overlay").hidden = false;
+      $("overlay").querySelector("h2").textContent =
+        state.shields === 0
+          ? "Your shields are down."
+          : "Your battery ran out.";
+      $("overlay").querySelector("p:not(.eyebrow)").textContent =
+        "Watch the patrols. Use Space to stun drones, then slip past.";
+      $("start").textContent = "Try again";
+      $("pause").disabled = true;
+      $("message").textContent = "Expedition ended. Try a different route.";
+    }
   }
-  draw();
+  if (wasRunning) draw();
   requestAnimationFrame(frame);
 }
+reduceMotion.addEventListener("change", draw);
+new IntersectionObserver(([entry]) => {
+  if (!entry.isIntersecting && running) pause();
+}).observe(canvas);
+draw();
 requestAnimationFrame(frame);
 // Read-only diagnostic for reproducible browser checks. No state mutation API.
 export function snapshot() {
-  return structuredClone({ state, mode, running });
+  return structuredClone({ state, mode, running, artworkReady });
 }

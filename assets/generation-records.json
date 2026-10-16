@@ -1,0 +1,41 @@
+{
+  "date": "2026-10-16",
+  "client": "dreamlayer@0.4.0-beta.4",
+  "newGenerationCredits": 3,
+  "costBasis": "Three completed standard image operations at one credit each, reconciled with a three-credit authenticated balance decrease.",
+  "records": [
+    {
+      "id": "environment",
+      "operation": "text_to_image",
+      "executionId": "08080e8d-b8f4-4282-ad31-cce6b8f6c921",
+      "status": "completed",
+      "sourcePath": "assets/source/generated/environment.png",
+      "prompt": "An original hand-painted environment for a top-down 2D game called Relay garden. Orthographic overhead camera, no horizon, no isometric perspective. A sunlit abandoned solarpunk botanical research courtyard, cream limestone and pale sage tile underfoot, jade foliage, teal glass, aged brass details, finely painted gouache textures and dappled afternoon sunlight. The outermost eight percent of the frame has lush fern leaves, broken glasshouse framing and flowering vines. The inner eighty-four percent is open walkable pale stone courtyard with subtle tile seams, a gentle horizontal path through its center and small moss cracks. Keep this inner area clear of physical structures and standing plants, since gameplay objects will be placed separately. Rich illustrated game art with crisp readable silhouettes and atmospheric depth, not a schematic diagram. No people, robots, enemies, tokens, UI, text, labels, logos, watermarks or artificial blur. Full bleed 16:9 environment.",
+      "referenceStep": null,
+      "credits": 1,
+      "wallSecondsIncludingUploadAndDownload": 48.79
+    },
+    {
+      "id": "objects",
+      "operation": "image_to_image",
+      "executionId": "6e86320e-3661-4faf-a3bd-db28e5ad7f39",
+      "status": "completed",
+      "sourcePath": "assets/source/generated/objects.png",
+      "prompt": "Use only the painterly texture, palette and lighting of this reference to create an original matching game-object asset sheet. Replace the entire scene with a perfectly plain white background. Arrange exactly six isolated objects in a spacious 3-column by 2-row grid with large empty gutters and no touching objects. Each object fits wholly inside its own equal-sized cell with a generous clear margin. Every object uses the same overhead orthographic view for a top-down game, slightly showing its front for legibility. Top left: a friendly compact cream ceramic garden rover with a rounded brass chassis, two small dark rubber treads, a teal glass eye and a small leaf antenna, facing downwards. Top center: a distinct rust-coral hovering security drone with circular brass body, dark central lens and two short side rotors. Top right: a square cream limestone planter densely filled with jade fern leaves. Bottom left: one golden glass energy cell, short cylindrical brass casing and luminous amber center. Bottom center: a circular teal-and-brass charging dock, seen from overhead, with a clear open center large enough to park the rover. Bottom right: a small ceramic relay beacon with a lit teal lens. All objects have bold readable shapes, subtle hand-painted detail, identical sunlight direction and crisp clean outlines. No scenery, panels, grid lines, labels, numbers, words, logos, other objects, cast shadows extending into gutters, or duplicates.",
+      "referenceStep": "environment",
+      "credits": 1,
+      "wallSecondsIncludingUploadAndDownload": 41.5
+    },
+    {
+      "id": "transparent-objects",
+      "operation": "background_remove",
+      "executionId": "79a2c584-730d-47be-b710-b5e2134d7703",
+      "status": "completed",
+      "sourcePath": "assets/source/generated/objects-transparent.png",
+      "prompt": null,
+      "referenceStep": "objects",
+      "credits": 1,
+      "wallSecondsIncludingUploadAndDownload": 13.66
+    }
+  ]
+}

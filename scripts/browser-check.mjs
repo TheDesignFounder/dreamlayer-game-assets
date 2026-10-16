@@ -1,5 +1,5 @@
 import { chromium } from "playwright";
-import { mkdir, writeFile } from "node:fs/promises";
+import { mkdir, writeFile, readFile } from "node:fs/promises";
 import assert from "node:assert/strict";
 const base = process.env.DEMO_URL || "http://127.0.0.1:4177/demo/";
 const browser = await chromium.launch({
@@ -17,15 +17,23 @@ try {
   const errors = [];
   page.on("pageerror", (error) => errors.push(error.message));
   await page.addInitScript(() => {
-    window.__drawnFrames = [];
+    window.__drawnAssets = [];
+    window.__cellPositions = [];
     const draw = CanvasRenderingContext2D.prototype.drawImage;
     CanvasRenderingContext2D.prototype.drawImage = function (image, ...args) {
       if (
         this.canvas.id === "game" &&
         image instanceof HTMLImageElement &&
-        /walk_\d+\.png$/.test(image.src)
+        /assets\/generated\//.test(image.src)
       )
-        window.__drawnFrames.push(image.src.split("/").pop());
+        window.__drawnAssets.push(image.src.split("/").pop());
+      if (
+        image instanceof HTMLImageElement &&
+        image.src.endsWith("/cell.png")
+      ) {
+        const transform = this.getTransform();
+        window.__cellPositions.push([transform.e, transform.f]);
+      }
       return draw.call(this, image, ...args);
     };
   });
@@ -38,6 +46,7 @@ try {
   await page.clock.runFor(500);
   await page.keyboard.up("ArrowRight");
   let current = await read();
+  assert.equal(current.artworkReady, true);
   assert.ok(current.state.player.x > 170 && current.state.player.x < 200);
   await page.locator("#pause").click();
   const paused = (await read()).state;
@@ -58,43 +67,74 @@ try {
   results.checks.push(
     "keyboard movement, pause, visual toggle preserves exact state",
   );
-  const alpha = await page.evaluate(async () => {
-    const checks = [];
-    for (let i = 1; i <= 7; i++) {
-      const img = new Image();
-      img.src = `assets/walk_${String(i).padStart(2, "0")}.png`;
-      await img.decode();
-      const c = document.createElement("canvas");
-      c.width = c.height = 128;
-      const x = c.getContext("2d");
-      x.drawImage(img, 0, 0);
-      const data = x.getImageData(0, 0, 128, 128).data;
-      let transparent = 0,
-        visible = 0;
-      for (let j = 3; j < data.length; j += 4) {
-        if (data[j] === 0) transparent++;
-        if (data[j] > 0) visible++;
+  const manifest = JSON.parse(await readFile("assets/manifest.json", "utf8"));
+  const alpha = await page.evaluate(
+    async (assets) => {
+      const checks = [];
+      for (const asset of assets) {
+        const img = new Image();
+        img.src = asset.path.replace(/^demo\//, "");
+        await img.decode();
+        const c = document.createElement("canvas");
+        c.width = img.naturalWidth;
+        c.height = img.naturalHeight;
+        const x = c.getContext("2d");
+        x.drawImage(img, 0, 0);
+        const data = x.getImageData(0, 0, c.width, c.height).data;
+        let transparent = 0,
+          visible = 0;
+        for (let j = 3; j < data.length; j += 4) {
+          if (data[j] === 0) transparent++;
+          if (data[j] > 0) visible++;
+        }
+        checks.push({
+          name: asset.path,
+          width: c.width,
+          height: c.height,
+          expectedWidth: asset.width,
+          expectedHeight: asset.height,
+          alpha: asset.alpha,
+          transparent,
+          visible,
+        });
       }
-      checks.push({
-        width: img.naturalWidth,
-        height: img.naturalHeight,
-        transparent,
-        visible,
-      });
-    }
-    return checks;
-  });
-  alpha.forEach((a) =>
-    assert.ok(
-      a.width === 128 && a.height === 128 && a.transparent > 0 && a.visible > 0,
-    ),
+      return checks;
+    },
+    manifest.assets.filter((asset) => asset.runtime),
   );
+  alpha.forEach((a) => {
+    assert.equal(a.width, a.expectedWidth);
+    assert.equal(a.height, a.expectedHeight);
+    assert.ok(a.visible > 0);
+    if (a.alpha) assert.ok(a.transparent > 0);
+  });
   results.alpha = alpha;
+  const drawn = await page.evaluate(() =>
+    [...new Set(window.__drawnAssets)].sort(),
+  );
+  assert.deepEqual(drawn, [
+    "beacon.png",
+    "cell.png",
+    "dock.png",
+    "drone.png",
+    "environment.webp",
+    "planter.png",
+    "rover.png",
+  ]);
+  results.checks.push(
+    "all seven newly generated runtime assets are decoded and actually drawn; six cropped props have genuine alpha",
+  );
   await page.locator("#restart").click();
   await page.locator("#start").click();
   async function walkTo(target) {
     for (let i = 0; i < 600; i++) {
       const { state } = await read();
+      assert.equal(
+        state.lost,
+        false,
+        "playthrough must survive the patrols and battery limit",
+      );
+      if (state.pulseCooldown === 0) await page.keyboard.press("Space");
       const dx = target.x - state.player.x,
         dy = target.y - state.player.y;
       if (Math.hypot(dx, dy) < 4 || state.won) return;
@@ -130,7 +170,9 @@ try {
     await walkTo({ x, y });
   assert.equal((await read()).state.won, true);
   assert.equal(await page.locator("#score").innerText(), "6 / 6 cells");
-  results.checks.push("complete six-cell playthrough and return-home win");
+  results.checks.push(
+    "complete six-cell playthrough with patrols and pulse, return-home win",
+  );
   await page.locator("#start").click();
   assert.equal((await read()).state.collected.length, 0);
   // Actual on-screen control: release outside the button must clear movement.
@@ -150,20 +192,29 @@ try {
   results.checks.push(
     "replay resets state; pointer movement and release outside control stop correctly",
   );
-  await page.locator("#animate").check();
-  await page.locator("#game").focus();
+  // Reduced motion must remove the decorative cell bob while keeping gameplay active.
+  await page.locator("#restart").click();
+  await page.locator("#start").click();
   await page.evaluate(() => {
-    window.__drawnFrames = [];
+    window.__cellPositions = [];
   });
-  await page.keyboard.down("ArrowUp");
-  await page.clock.runFor(3000);
-  await page.keyboard.up("ArrowUp");
-  const frames = await page.evaluate(() =>
-    [...new Set(window.__drawnFrames)].sort(),
+  await page.clock.runFor(500);
+  const normalPositions = await page.evaluate(
+    () => new Set(window.__cellPositions.map((point) => point.join(","))).size,
   );
-  assert.equal(frames.length, 7);
+  assert.ok(normalPositions > 6);
+  await page.emulateMedia({ reducedMotion: "reduce" });
+  await page.evaluate(() => {
+    window.__cellPositions = [];
+  });
+  await page.clock.runFor(500);
+  const reducedPositions = await page.evaluate(
+    () => new Set(window.__cellPositions.map((point) => point.join(","))).size,
+  );
+  assert.equal(reducedPositions, 6);
+  assert.equal((await read()).running, true);
   results.checks.push(
-    "all seven animation frames drawn during a real 3-second movement interval",
+    "reduced motion disables decorative cell movement while gameplay continues",
   );
   for (const width of [320, 390]) {
     await page.setViewportSize({ width, height: 844 });
@@ -178,28 +229,7 @@ try {
       fullPage: true,
     });
   }
-  await page.emulateMedia({ reducedMotion: "reduce" });
-  await page.locator("#animate").check();
-  assert.equal(
-    await page.evaluate(
-      () => matchMedia("(prefers-reduced-motion: reduce)").matches,
-    ),
-    true,
-  );
-  await page.evaluate(() => {
-    window.__drawnFrames = [];
-  });
-  await page.locator("#game").focus();
-  await page.keyboard.down("ArrowDown");
-  await page.clock.runFor(1000);
-  await page.keyboard.up("ArrowDown");
-  assert.deepEqual(
-    await page.evaluate(() => [...new Set(window.__drawnFrames)]),
-    ["walk_01.png"],
-  );
-  results.checks.push(
-    "320/390 px layout; reduced motion media; all seven PNGs decode with real transparency",
-  );
+  results.checks.push("320/390 px layouts have no horizontal overflow");
   assert.deepEqual(errors, []);
   await writeFile(
     "test-results/browser.json",

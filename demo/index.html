@@ -6,7 +6,7 @@
     <title>Relay garden | REA + DreamLayer</title>
     <meta
       name="description"
-      content="A playable, open-source game-art example: investigate movement with REA, preserve the mechanic, and integrate original DreamLayer robot artwork."
+      content="Recover six cells, evade patrol drones and bring a painted greenhouse back online. An open-source browser game with original DreamLayer artwork and a reproducible REA movement investigation."
     />
     <link
       rel="icon"
@@ -19,24 +19,23 @@
       <header class="masthead">
         <a href="https://dreamlayer.io" class="brand"
           >DreamLayer<span class="brand-dot">●</span></a
-        ><span class="edition">FIELD NOTES / 001</span
-        ><a href="https://github.com/TheDesignFounder/dreamlayer-game-assets"
-          >Source ↗</a
         >
+        <nav aria-label="About this game">
+          <a
+            href="https://github.com/TheDesignFounder/dreamlayer-game-assets/blob/main/docs/asset-workflow.md"
+            >How it was made</a
+          ><a href="https://github.com/TheDesignFounder/dreamlayer-game-assets"
+            >Source ↗</a
+          >
+        </nav>
       </header>
       <section class="intro">
         <div>
-          <p class="eyebrow">A PLAYABLE WORKFLOW</p>
           <h1>Relay garden<span>.</span></h1>
           <p class="lede">
-            One mechanic. Two ways to see it.<br />Collect six energy cells and
-            bring the garden online.
+            Recover six cells. Evade the drones. Get back before your battery
+            runs out.
           </p>
-        </div>
-        <div class="proof">
-          <span>01 &nbsp; REA investigates movement</span
-          ><span>02 &nbsp; The agent builds the game</span
-          ><span>03 &nbsp; DreamLayer supplies the robot art</span>
         </div>
       </section>
       <section class="game-shell" aria-label="Relay garden game">
@@ -46,6 +45,8 @@
             ><button id="baseline" aria-pressed="false">Geometry</button>
           </div>
           <span id="score" role="status" aria-live="polite">0 / 6 cells</span
+          ><span id="shields" aria-label="3 shields remaining">◆◆◆</span
+          ><span id="timer" aria-label="Battery time remaining">1:30</span
           ><button id="pause" disabled>Pause</button
           ><button id="restart">Restart</button>
         </div>
@@ -55,25 +56,28 @@
             width="960"
             height="540"
             tabindex="0"
-            aria-label="Relay garden. Move with arrow keys or W A S D. Collect six gold cells, avoid the stone planters, then return to the blue dock. Escape pauses."
+            aria-label="Relay garden. Move with arrow keys or W A S D. Collect six gold cells, avoid the planters and patrol drones, then return to the blue dock within 90 seconds. Space sends a pulse to stun nearby drones. Escape pauses."
             >This game requires a browser with Canvas support. The mechanic and
             source are available in the repository.</canvas
           >
           <div id="overlay" class="overlay">
             <div>
-              <p class="eyebrow">THE GARDEN IS WAITING</p>
-              <h2>A little robot.<br />A small mission.</h2>
-              <p>Find all six cells. Return to the blue dock.</p>
-              <button id="start">Start exploring <span>→</span></button>
+              <p class="eyebrow">RELAY GARDEN</p>
+              <h2>Bring the garden online.</h2>
+              <p>
+                Six cells. Three shields. Ninety seconds.<br />Move with WASD or
+                arrows. Space stuns drones.
+              </p>
+              <button id="start">Play <span>→</span></button>
             </div>
           </div>
         </div>
         <div class="game-footer">
           <span id="message" role="status"
-            >Arrow keys / WASD to move · Escape to pause</span
-          ><label
-            ><input type="checkbox" id="animate" /> Animate robot
-            <small>(sample)</small></label
+            >Move: arrows / WASD · Pulse: Space · Pause: Esc</span
+          ><a
+            href="https://github.com/TheDesignFounder/dreamlayer-game-assets/blob/main/assets/manifest.json"
+            >Artwork made with DreamLayer ↗</a
           >
         </div>
       </section>
@@ -82,47 +86,54 @@
         ><button data-x="0" data-y="-1" aria-label="Move up">↑</button
         ><button data-x="0" data-y="1" aria-label="Move down">↓</button
         ><button data-x="1" data-y="0" aria-label="Move right">→</button>
+        <button id="pulse" aria-label="Pulse to stun nearby drones">
+          Pulse
+        </button>
       </div>
-      <section class="notes">
-        <article>
-          <span class="note-index">THE MECHANIC</span>
-          <h2>Equal speed in every direction.</h2>
-          <p>
-            Diagonal input is normalized. Movement runs at 180 pixels per
-            second, with a 50 ms frame cap. Switching artwork changes only the
-            drawing.
-          </p>
-          <a
-            href="https://github.com/TheDesignFounder/dreamlayer-game-assets/blob/main/docs/rea-workflow.md"
-            >Read the investigation ↗</a
-          >
-        </article>
-        <article>
-          <span class="note-index">THE ARTWORK</span>
-          <h2>Real assets. Honest provenance.</h2>
-          <p>
-            The robot is a reused DreamLayer-generated sample. The garden and
-            interface are authored vector art. No API key or paid call is needed
-            to play.
-          </p>
-          <a
-            href="https://github.com/TheDesignFounder/dreamlayer-game-assets/blob/main/docs/asset-workflow.md"
-            >See the asset workflow ↗</a
-          >
-        </article>
-        <article>
-          <span class="note-index">THE BOUNDARY</span>
-          <h2>A controlled demonstration.</h2>
-          <p>
-            REA analyzed our minified reference game. This is one bounded
-            movement investigation. The sample animation has visible detail
-            drift and is optional.
-          </p>
-          <a href="https://github.com/TheDesignFounder/dreamlayer-agent-plugin"
-            >Install the workflows ↗</a
-          >
-        </article>
-      </section>
+      <details class="making-of">
+        <summary>About the artwork and the movement experiment</summary>
+        <section class="notes">
+          <article>
+            <span class="note-index">THE MECHANIC</span>
+            <h2>Equal speed in every direction.</h2>
+            <p>
+              Diagonal input is normalized. Movement runs at 180 pixels per
+              second, with a 50 ms frame cap. Switching artwork changes only the
+              drawing.
+            </p>
+            <a
+              href="https://github.com/TheDesignFounder/dreamlayer-game-assets/blob/main/docs/rea-workflow.md"
+              >Read the investigation ↗</a
+            >
+          </article>
+          <article>
+            <span class="note-index">THE ARTWORK</span>
+            <h2>One scene. One visual language.</h2>
+            <p>
+              DreamLayer generated the courtyard, then a matching sheet of six
+              objects from that reference. Background removal and crops turned
+              the sheet into game assets. No account is needed to play.
+            </p>
+            <a
+              href="https://github.com/TheDesignFounder/dreamlayer-game-assets/blob/main/docs/asset-workflow.md"
+              >See the asset workflow ↗</a
+            >
+          </article>
+          <article>
+            <span class="note-index">THE BOUNDARY</span>
+            <h2>A controlled demonstration.</h2>
+            <p>
+              REA analyzed our minified reference game. This is one bounded
+              movement investigation. Patrols, shields and the pulse are
+              original game rules built around that movement.
+            </p>
+            <a
+              href="https://github.com/TheDesignFounder/dreamlayer-agent-plugin"
+              >Install the workflows ↗</a
+            >
+          </article>
+        </section>
+      </details>
       <footer>
         REA investigation → agent implementation → DreamLayer artwork → tested
         game <span>Independent example. No REA affiliation.</span>

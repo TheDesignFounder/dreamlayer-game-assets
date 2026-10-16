@@ -1,146 +1,163 @@
 {
-  "schemaVersion": 1,
-  "newGenerationCredits": 0,
-  "historicalGenerationCredits": {
-    "reference": 1,
-    "sprite": 5.8,
-    "basis": "upstream examples/README.md, historical report, not remeasured"
-  },
+  "schemaVersion": 2,
+  "newGenerationCredits": 3,
+  "generationRecords": "assets/generation-records.json",
+  "cropRecords": "assets/crops.json",
   "assets": [
     {
-      "path": "demo/assets/garden.svg",
-      "sha256": "4d18d95849ad83eaad350ee490947a636ace6441298c75df7049341a2769bff6",
-      "format": "svg",
-      "width": 960,
-      "height": 540,
-      "role": "background",
-      "origin": "Original hand-authored vector scene for this example, not AI output",
+      "path": "demo/assets/generated/beacon.png",
+      "sha256": "ad5a58ae6d273d09b2f37a7754695c84188fab4246413c629e02138849f8f598",
+      "format": "png",
+      "width": 146,
+      "height": 148,
+      "alpha": true,
+      "role": "progress indicator",
+      "runtime": true,
+      "origin": "Crop of DreamLayer background-removed object sheet; eight transparent pixels of padding added",
+      "generationRecord": "transparent-objects",
       "license": "MIT"
     },
     {
-      "path": "demo/assets/walk_01.png",
-      "sha256": "95a12cf13b3e4dee70583721fd75da56ed075b3595d9e88b047da61e9b7567a6",
+      "path": "demo/assets/generated/cell.png",
+      "sha256": "295078dd5a3e2a326fcaa6288d8b6b9cfa40d5dce925af589e4bb95f46e496b5",
       "format": "png",
-      "width": 128,
-      "height": 128,
+      "width": 134,
+      "height": 210,
       "alpha": true,
-      "role": "player animation frame",
-      "origin": "DreamLayer Agent API, reused public sample; not generated during this demo",
-      "source": "https://github.com/TheDesignFounder/dreamlayer-agent-plugin/blob/a0244b6/examples/source/walk.zip",
-      "sourceMember": "frames/walk_01.png",
-      "license": "MIT (upstream example repository)",
-      "transform": "None. Extracted original bytes."
+      "role": "collectible",
+      "runtime": true,
+      "origin": "Crop of DreamLayer background-removed object sheet; eight transparent pixels of padding added",
+      "generationRecord": "transparent-objects",
+      "license": "MIT"
     },
     {
-      "path": "demo/assets/walk_02.png",
-      "sha256": "5eeed648cfc30d80e25866a8423148a003615b48f4b2f20269f094f80139a503",
+      "path": "demo/assets/generated/dock.png",
+      "sha256": "931c636bde0101e42c1e77474846ea1428a90f848d7ded9ce1a60932389dbdab",
       "format": "png",
-      "width": 128,
-      "height": 128,
+      "width": 319,
+      "height": 320,
       "alpha": true,
-      "role": "player animation frame",
-      "origin": "DreamLayer Agent API, reused public sample; not generated during this demo",
-      "source": "https://github.com/TheDesignFounder/dreamlayer-agent-plugin/blob/a0244b6/examples/source/walk.zip",
-      "sourceMember": "frames/walk_02.png",
-      "license": "MIT (upstream example repository)",
-      "transform": "None. Extracted original bytes."
+      "role": "home dock",
+      "runtime": true,
+      "origin": "Crop of DreamLayer background-removed object sheet; eight transparent pixels of padding added",
+      "generationRecord": "transparent-objects",
+      "license": "MIT"
     },
     {
-      "path": "demo/assets/walk_03.png",
-      "sha256": "72d1860df370c0b1f4e91b5c579b6a98c71de5e026de83da7f3eb57083651fa6",
+      "path": "demo/assets/generated/drone.png",
+      "sha256": "1cd39ef497e84e9e134cf098742791771817b1344ed6415b1edeefcfdc9f05c4",
       "format": "png",
-      "width": 128,
-      "height": 128,
+      "width": 406,
+      "height": 196,
       "alpha": true,
-      "role": "player animation frame",
-      "origin": "DreamLayer Agent API, reused public sample; not generated during this demo",
-      "source": "https://github.com/TheDesignFounder/dreamlayer-agent-plugin/blob/a0244b6/examples/source/walk.zip",
-      "sourceMember": "frames/walk_03.png",
-      "license": "MIT (upstream example repository)",
-      "transform": "None. Extracted original bytes."
+      "role": "enemy",
+      "runtime": true,
+      "origin": "Crop of DreamLayer background-removed object sheet; eight transparent pixels of padding added",
+      "generationRecord": "transparent-objects",
+      "license": "MIT"
     },
     {
-      "path": "demo/assets/walk_04.png",
-      "sha256": "1f5b4a98e8a8f23645bc02a40f8cb99baf8445b1b7e49dd14c744c7170024d24",
-      "format": "png",
-      "width": 128,
-      "height": 128,
-      "alpha": true,
-      "role": "player animation frame",
-      "origin": "DreamLayer Agent API, reused public sample; not generated during this demo",
-      "source": "https://github.com/TheDesignFounder/dreamlayer-agent-plugin/blob/a0244b6/examples/source/walk.zip",
-      "sourceMember": "frames/walk_04.png",
-      "license": "MIT (upstream example repository)",
-      "transform": "None. Extracted original bytes."
+      "path": "demo/assets/generated/environment.webp",
+      "sha256": "57c6cc74558d5d24d16a64f7f82c0a9c7a9b89c4f06e4213968ae0b546f6eed6",
+      "format": "webp",
+      "width": 1920,
+      "height": 1080,
+      "alpha": false,
+      "role": "game background",
+      "runtime": true,
+      "origin": "DreamLayer generated; delivery resize and WebP encoding",
+      "generationRecord": "environment",
+      "license": "MIT"
     },
     {
-      "path": "demo/assets/walk_05.png",
-      "sha256": "f280a9f9033173586072e432decf74812bafdb2a140843902afec877eaadb1c6",
+      "path": "demo/assets/generated/planter.png",
+      "sha256": "125f336867bc4105817ff43ed7599f8c25588ffd1a6105730d49b2ea1ed013d2",
       "format": "png",
-      "width": 128,
-      "height": 128,
+      "width": 339,
+      "height": 338,
       "alpha": true,
-      "role": "player animation frame",
-      "origin": "DreamLayer Agent API, reused public sample; not generated during this demo",
-      "source": "https://github.com/TheDesignFounder/dreamlayer-agent-plugin/blob/a0244b6/examples/source/walk.zip",
-      "sourceMember": "frames/walk_05.png",
-      "license": "MIT (upstream example repository)",
-      "transform": "None. Extracted original bytes."
+      "role": "obstacle",
+      "runtime": true,
+      "origin": "Crop of DreamLayer background-removed object sheet; eight transparent pixels of padding added",
+      "generationRecord": "transparent-objects",
+      "license": "MIT"
     },
     {
-      "path": "demo/assets/walk_06.png",
-      "sha256": "3511230ce9aa1e03397e730d554891a4b4557207c4198fb11dab2198f5edd08f",
+      "path": "demo/assets/generated/rover.png",
+      "sha256": "2900865f4d7b411eb8e03d3382975247c8720c502d66b5092f6966f92889ed77",
       "format": "png",
-      "width": 128,
-      "height": 128,
+      "width": 251,
+      "height": 331,
       "alpha": true,
-      "role": "player animation frame",
-      "origin": "DreamLayer Agent API, reused public sample; not generated during this demo",
-      "source": "https://github.com/TheDesignFounder/dreamlayer-agent-plugin/blob/a0244b6/examples/source/walk.zip",
-      "sourceMember": "frames/walk_06.png",
-      "license": "MIT (upstream example repository)",
-      "transform": "None. Extracted original bytes."
+      "role": "player",
+      "runtime": true,
+      "origin": "Crop of DreamLayer background-removed object sheet; eight transparent pixels of padding added",
+      "generationRecord": "transparent-objects",
+      "license": "MIT"
     },
     {
-      "path": "demo/assets/walk_07.png",
-      "sha256": "0e7f21a4e905505677385504f32f74294c06af206a4e917239a6ecf44fca2de0",
+      "path": "assets/source/generated/environment.png",
+      "sha256": "f106d3acb228b1a8015f4d678c7a32b03032d892e033b96dd985b9c3349ce94a",
       "format": "png",
-      "width": 128,
-      "height": 128,
+      "width": 2560,
+      "height": 1440,
+      "alpha": false,
+      "role": "source artwork",
+      "runtime": false,
+      "origin": "Original downloaded DreamLayer output bytes",
+      "generationRecord": "environment",
+      "license": "MIT"
+    },
+    {
+      "path": "assets/source/generated/objects-transparent.png",
+      "sha256": "f43c79eaa84b53c8f31119123aad678378c33e8c19581713671508d695bfe080",
+      "format": "png",
+      "width": 1365,
+      "height": 768,
       "alpha": true,
-      "role": "player animation frame",
-      "origin": "DreamLayer Agent API, reused public sample; not generated during this demo",
-      "source": "https://github.com/TheDesignFounder/dreamlayer-agent-plugin/blob/a0244b6/examples/source/walk.zip",
-      "sourceMember": "frames/walk_07.png",
-      "license": "MIT (upstream example repository)",
-      "transform": "None. Extracted original bytes."
+      "role": "source artwork",
+      "runtime": false,
+      "origin": "Original downloaded DreamLayer output bytes",
+      "generationRecord": "transparent-objects",
+      "license": "MIT"
+    },
+    {
+      "path": "assets/source/generated/objects.png",
+      "sha256": "a1f4d719fe0e8fc588c7a736c81785c294f5f4450cfb7419e1da6b6ac4f8225b",
+      "format": "png",
+      "width": 1365,
+      "height": 768,
+      "alpha": false,
+      "role": "source artwork",
+      "runtime": false,
+      "origin": "Original downloaded DreamLayer output bytes",
+      "generationRecord": "objects",
+      "license": "MIT"
     }
   ],
-  "animation": {
-    "durations_ms": [
-      400,
-      410,
-      400,
-      410,
-      400,
-      410,
-      400
+  "rendering": {
+    "playerBox": [
+      48,
+      54
     ],
-    "frameCount": 7,
-    "deliveredCycleMs": 2830,
-    "upstreamDurationMetadataMs": 2833,
-    "note": "Use delivered frame durations; metadata differs by 3 ms. Optional: eye/body details vary between frames."
+    "logicalBodyRadius": 16,
+    "animation": "Code rotates the still rover and bobs cells; reduced motion disables decorative bobbing. No sprite animation was generated.",
+    "background": "Painted boundary foliage is decorative; only the three logical planters block movement."
   },
   "codeArtwork": [
     {
-      "role": "obstacle and collectible",
+      "role": "geometry mode, shadows, status rings and pulse effects",
       "source": "demo/game.js",
-      "origin": "Canvas shapes authored for this example, not DreamLayer generation"
+      "origin": "Authored Canvas code"
     },
     {
       "role": "interface",
       "source": "demo/style.css",
-      "origin": "HTML/CSS authored for this example"
+      "origin": "Authored HTML/CSS"
     }
-  ]
+  ],
+  "bootstrap": {
+    "revision": "e628b3da96b69b7a19deaf4439336427ee609d90",
+    "note": "Earlier revision reused seven DreamLayer robot frames and an authored SVG garden. Those runtime files have been replaced by the newly generated set."
+  }
 }

@@ -55,6 +55,50 @@ canvas:focus-visible {
   border-bottom: 1px solid #dde5e9;
   font-size: 14px;
 }
+.masthead nav {
+  display: flex;
+  gap: 24px;
+}
+.making-of {
+  margin-top: 32px;
+  border-top: 1px solid #d8e2e7;
+  padding-top: 20px;
+}
+.making-of summary {
+  cursor: pointer;
+  color: #526773;
+}
+.making-of .notes {
+  margin: 24px 0;
+}
+.embedded main {
+  max-width: none;
+  padding: 0;
+}
+.embedded .masthead,
+.embedded .making-of,
+.embedded footer {
+  display: none;
+}
+.embedded .intro {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  padding: 0;
+  white-space: nowrap;
+}
+.embedded .game-shell {
+  border: 0;
+  border-radius: 0;
+  box-shadow: none;
+}
+.embedded .touch-controls {
+  margin: 0;
+  padding: 10px 0;
+  background: white;
+}
 .brand {
   font-size: 22px;
   font-weight: 650;
@@ -80,17 +124,17 @@ canvas:focus-visible {
   display: flex;
   justify-content: space-between;
   align-items: flex-end;
-  padding: 52px 0 32px;
+  padding: 24px 0;
 }
 .eyebrow {
   margin: 0 0 12px;
 }
 h1 {
-  font-size: clamp(42px, 5vw, 60px);
+  font-size: clamp(28px, 4vw, 40px);
   line-height: 1.07;
   letter-spacing: -0.045em;
   font-weight: 550;
-  margin: 0 0 20px;
+  margin: 0 0 10px;
 }
 h1 span {
   color: #2867ee;
@@ -151,6 +195,20 @@ h1 span {
     monospace;
   margin-right: 12px;
 }
+#shields {
+  color: #245bc8;
+  letter-spacing: 2px;
+}
+#timer {
+  font:
+    13px ui-monospace,
+    monospace;
+  min-width: 35px;
+}
+.touch-controls #pulse {
+  width: 90px;
+  color: #245bc8;
+}
 .stage {
   position: relative;
   background: #e6efee;
@@ -167,8 +225,14 @@ canvas {
   display: grid;
   place-items: center;
   text-align: center;
-  background: #edf4efb8;
-  backdrop-filter: blur(3px);
+  background: #edf4ef38;
+}
+.overlay > div {
+  padding: 24px 32px;
+  background: #fffffff2;
+  border: 1px solid #d8e2e7;
+  border-radius: 12px;
+  box-shadow: 0 12px 45px #193b5318;
 }
 .overlay[hidden] {
   display: none;
@@ -214,6 +278,7 @@ canvas {
 }
 .touch-controls {
   display: flex;
+  flex-wrap: wrap;
   justify-content: center;
   gap: 10px;
   margin-top: 16px;
@@ -271,7 +336,7 @@ footer span {
     display: none;
   }
   .intro {
-    padding: 32px 0 24px;
+    padding: 20px 0;
     display: block;
   }
   .proof {
@@ -282,6 +347,9 @@ footer span {
     padding: 8px;
     gap: 6px;
     flex-wrap: wrap;
+  }
+  #shields {
+    font-size: 12px;
   }
   .view-switch button {
     padding: 5px 10px;
@@ -304,7 +372,7 @@ footer span {
     margin: 32px 0;
   }
   .overlay h2 {
-    font-size: 26px;
+    font-size: 22px;
     margin: 4px 0;
   }
   .overlay .eyebrow {
@@ -320,6 +388,14 @@ footer span {
   }
   .stage {
     min-height: 180px;
+  }
+  .overlay > div {
+    padding: 12px 16px;
+    margin: 8px;
+  }
+  .masthead nav {
+    gap: 12px;
+    font-size: 12px;
   }
   footer {
     flex-direction: column;

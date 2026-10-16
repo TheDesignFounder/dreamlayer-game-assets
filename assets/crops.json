@@ -1,0 +1,79 @@
+{
+  "source": "assets/source/generated/objects-transparent.png",
+  "method": "Reviewed 3-by-2 grid, trim to nonzero alpha, add 8 transparent pixels on each side; no resampling of object pixels",
+  "backgroundDelivery": "2560x1440 RGB PNG resized to 1920x1080 WebP, quality 90, Pillow 11.3.0",
+  "crops": [
+    {
+      "asset": "rover",
+      "sourceRect": [
+        144,
+        44,
+        379,
+        359
+      ],
+      "padding": 8,
+      "width": 251,
+      "height": 331
+    },
+    {
+      "asset": "drone",
+      "sourceRect": [
+        493,
+        106,
+        883,
+        286
+      ],
+      "padding": 8,
+      "width": 406,
+      "height": 196
+    },
+    {
+      "asset": "planter",
+      "sourceRect": [
+        950,
+        49,
+        1273,
+        371
+      ],
+      "padding": 8,
+      "width": 339,
+      "height": 338
+    },
+    {
+      "asset": "cell",
+      "sourceRect": [
+        201,
+        486,
+        319,
+        680
+      ],
+      "padding": 8,
+      "width": 134,
+      "height": 210
+    },
+    {
+      "asset": "dock",
+      "sourceRect": [
+        541,
+        428,
+        844,
+        732
+      ],
+      "padding": 8,
+      "width": 319,
+      "height": 320
+    },
+    {
+      "asset": "beacon",
+      "sourceRect": [
+        1054,
+        516,
+        1184,
+        648
+      ],
+      "padding": 8,
+      "width": 146,
+      "height": 148
+    }
+  ]
+}
