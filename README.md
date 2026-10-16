@@ -68,7 +68,7 @@ The canonical `integrate-game-art` skill lives in the existing DreamLayer plugin
 published workflow commit while its pull request is pending:
 
 ```sh
-npx skills@1.7.2 add https://github.com/TheDesignFounder/dreamlayer-agent-plugin/tree/9ede338c99f189851268ba3a2ac09d67f0b086fc --skill integrate-game-art --agent codex
+npx skills@1.7.2 add https://github.com/TheDesignFounder/dreamlayer-agent-plugin/tree/7bc11ad78e5238d5acec01dfd5ea584a5d371f87 --skill integrate-game-art --agent codex
 ```
 
 After the workflow is merged, the same selection works with `TheDesignFounder/dreamlayer-agent-plugin`.
