@@ -251,13 +251,14 @@ canvas {
   margin: 12px 0 24px;
 }
 .overlay button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  padding: 8px 24px;
   color: white;
   background: #2867ee;
   border-color: #2867ee;
-  min-width: 210px;
-}
-.overlay button span {
-  margin-left: 24px;
 }
 .game-footer {
   display: flex;
@@ -386,10 +387,6 @@ footer span {
   .overlay p:not(.eyebrow) {
     font-size: 12px;
     margin: 6px 0 10px;
-  }
-  .overlay button {
-    min-height: 40px;
-    padding: 6px 12px;
   }
   .stage {
     min-height: 180px;
